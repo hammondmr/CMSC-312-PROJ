@@ -3,6 +3,5 @@
 
 int main() {
     shell_loop();
-    std::cout << "random change";
     return 0;
 }

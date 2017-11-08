@@ -17,25 +17,35 @@ void load_program(std::string filename) {
     while(!loadfile.eof()) {
         std::getline(loadfile, line);
         code_lines.push_back(line);
-        std::cout << "*" + line << std::endl;
     }
 
     loadfile.close();
     
-    ps_controlblock new_pcb(code_lines);
+    ps_controlblock new_pcb(filename, code_lines);
     pcb_chain.push_back(new_pcb);
     ready_queue.push(new_pcb);
     new_pcb.set_state(READY);
 }
 
 void execute(int num_cycles) {
-    ps_controlblock next_pcb = ready_queue.front();
-    ready_queue.pop();
-    ready_queue.push(next_pcb);
-    
+    //ready_queue.pop();
+    //ready_queue.push(next_pcb);
+    std::string line = "";
+    std::string process_name = "";
+    unsigned int process_id;
     for (int i = 0; i < num_cycles; i++) {
-        std::cout << next_pcb.get_code_line();
-        std::cout << std::endl;
+        // eof
+        line = ready_queue.front().get_code_line();
+        while(line == "" && ready_queue.size() > 0) {
+            ready_queue.pop();
+            line = ready_queue.front().get_code_line();
+        } if (ready_queue.size() == 0) {
+            std::cout << "ready queue empty";
+            return;
+        }
+        process_name = ready_queue.front().get_process_name();
+        process_id = ready_queue.front().get_process_id();
+        std::cout << "executing: " << process_name << "(" << process_id << ") - " <<  line << std::endl;
     }
 }
 

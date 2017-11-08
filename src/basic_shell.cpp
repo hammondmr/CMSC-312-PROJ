@@ -23,13 +23,12 @@ int process_input(std::string input) {
     }
     if (args[0] == "EXEC") {
 		std::cout << "executing..." << std::endl;
+        int cycles = 1;
         if(args.size() >= 2) {
-            int cycles = std::stoi(args[1], nullptr, 10);
-            cout << cycles;
-            execute(cycles);
-        } else {
-            execute(1);
+            cycles = std::stoi(args[1], nullptr, 10);
         }
+        execute(cycles);
+
 		std::cout << "done." << std::endl;
 		return EXIT_SUCCESS;
 	}
