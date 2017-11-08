@@ -28,6 +28,10 @@ int process_input(std::string input) {
 	if (args[0] == "LOAD") {
 		std::cout << "loading..." << std::endl;
         
+        if(args.size() < 2) {
+            std::cout << "no filename entered." << std::endl;
+            return EXIT_FAILURE;
+        }
         std::string file_name = args[1];
         std::ifstream loadfile;
 
