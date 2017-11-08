@@ -4,9 +4,7 @@ src = src
 obj = object_files
 std = -std=c++11
 
-all: awesome_os.exe
-
-awesome_os.exe: $(obj)/main.o $(obj)/basic_shell.o
+awesome_os.exe: $(obj)/main.o $(obj)/basic_shell.o $(obj)/kernel.o $(obj)/ps_controlblock.o
 	g++ $(std) -Wall $(obj)/main.o $(obj)/basic_shell.o $(obj)/kernel.o $(obj)/ps_controlblock.o -o awesome_os.exe
 
 $(obj)/main.o: $(src)/main.cpp

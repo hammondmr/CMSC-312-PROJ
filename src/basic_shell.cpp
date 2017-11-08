@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include "basic_shell.h"
+#include "kernel.h"
 
 std::string input_line = "";
 
@@ -22,6 +23,13 @@ int process_input(std::string input) {
     }
     if (args[0] == "EXEC") {
 		std::cout << "executing..." << std::endl;
+        if(args.size() >= 2) {
+            int cycles = std::stoi(args[1], nullptr, 10);
+            cout << cycles;
+            execute(cycles);
+        } else {
+            execute(1);
+        }
 		std::cout << "done." << std::endl;
 		return EXIT_SUCCESS;
 	}
@@ -33,19 +41,8 @@ int process_input(std::string input) {
             return EXIT_FAILURE;
         }
         std::string file_name = args[1];
-        std::ifstream loadfile;
-
-        loadfile.open("text_files/" + file_name);
-    
-        std::vector<string> code_lines;
-        std::string line;
-
-        while(!loadfile.eof()) {
-            std::getline(loadfile, line);
-            std::cout << line << std::endl;
-        }
-
-        loadfile.close();
+        
+        load_program(file_name);
     
 		std::cout << "done." << std::endl;
 		return EXIT_SUCCESS;
